@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+                const Posts = [
+  {
+    title: 'Post',
+    postTime: '10:12 AM'
+  },
+  {
+    title: 'Post1',
+    postTime: '10:15 AM'
+  }
+];
+
+function printPosts() {
+  Posts.forEach((post) => {
+    console.log(post.title);
+    console.log(post.postTime);
+  });
+}
+
+function createPost() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const newPost = {
+        title: 'Post2',
+        postTime: new Date().toLocaleTimeString()
+      };
+      Posts.push(newPost);
+      resolve(newPost);
+    }, 3000);
+  });
+}
+
+function updateLastUserActivityTime() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const updatedActivityTime = new Date().toLocaleTimeString();
+      Posts[0].postTime = updatedActivityTime;
+      resolve(updatedActivityTime);
+    }, 2000);
+  });
+}
+
+function deletePosts() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const numPostsToDelete = 1;
+      const lastPostIndex = Posts.length - 1;
+      if (lastPostIndex >= numPostsToDelete - 1) {
+        Posts.splice(lastPostIndex - numPostsToDelete + 1, numPostsToDelete);
+        resolve();
+      } else {
+        reject("Insufficient posts available to delete.");
+      }
+    }, 1000);
+  });
+}
+
+async function print() {
+  const [newPost, activityTime] = await Promise.all([createPost(), updateLastUserActivityTime()]);
+  printPosts();
+
+  try {
+    await deletePosts();
+    console.log("Posts after deletion:");
+    printPosts();
+  } catch (error) {
+    console.error("Deletion error:", error);
+  }
+}
+
+print();
+
+
+    </script>
+</body>
+</html>

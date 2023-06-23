@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+      <script>
+        console.log('Person1: Show Ticket');
+console.log('Person2: show Ticket');
+
+const preMovie = async () => {
+   const getTicket = new Promise ((resolve, reject) =>{
+     setTimeout(() => resolve('Ticket'),3000);
+   })
+   const getPopcorn = new Promise((resolve,reject) => resolve('Popcorn'));
+   
+   const addButter = new Promise((resolve, reject)=> resolve( 'Buttur Added'));
+   const getColdDrink = new Promise((resolve,reject)=> resolve('Cold Drink'));
+      
+      let ticket = await getTicket;
+
+      console.log(`Wife : I have the ${ticket}`);
+      console.log(`husband: we should go in`);
+      console.log(`wife : no i am hungry`);
+
+      let popcorn = await getPopcorn;
+
+      console.log(`husband : i got some ${popcorn}`);
+      console.log(`husband: we should go in`);
+      console.log(`wife: i need butter on my popcorn`);
+
+      let butter = await addButter;
+      
+      console.log(`husband : i got some ${butter} on popcorn `);
+      console.log(` husband: Anything else --- `);
+      console.log('wife : i want cold Drink');
+      
+      let colddrink = await getColdDrink;
+      
+      console.log(`husband : i got ${colddrink} also.`);
+      console.log(`wife : we should goin now`)
+      console.log(`************* WE uses Promise.all here************`)
+      let [popcorn1 , butter2, colddrink3] = await Promise.all([getPopcorn, addButter, getColdDrink])
+          console.log(`${popcorn1},${butter2},${colddrink3}`)
+      
+      
+      return ticket;
+      
+
+}
+  preMovie().then((m)=> console.log(`Person3: Show ${m}`));
+  
+  console.log('Person4: show Ticket');
+  console.log('Person5: show Ticket');
+      </script>
+</body>
+</html>
